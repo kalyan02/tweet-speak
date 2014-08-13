@@ -1,27 +1,33 @@
 Tweet-speak
 ===========
 
-TweetSpeak is a fun project that uses javascript based Text-To-Speech engine for reading out twitter tweets. The app uses the awesome Python Flask backend to fetch tweets, python BeautifulSoup package to scrape HTML and runs behind nginx web server and uwsgi app server.
+TweetSpeak is a fun project that uses javascript based Text-To-Speech engine for reading out twitter tweets. 
 
 This is a simple and complete python app that runs at [http://three.lonefish.net/tweets/read/kalyan02](http://three.lonefish.net/tweets/read/kalyan02)
 
+### requirements
+
+  - python-Flask 
+  - python-BeautifulSoup
+  - nginx
+  - uwsgi
+
 
 # Setup
+
 
 ### nginx
 
 	$ sudo apt-get install nginx
 	$ cp ./nginx.conf /etc/nginx/sites-available/default
 
-### uwsgi
-
-#### upstart init/service config
+### upstart init/service config
 
 	$ sudo apt-get install uwsgi
 	$ cp uwsgi-upstart.ini /etc/init/uwsgi.conf
 	$ sudo service uwsgi restart
 	
-#### running uwsgi for testing
+### running uwsgi for testing
 	
 	$ uwsgi uwsgi.ini
 	
