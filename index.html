@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tweet reader for : user</title>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <style type='text/css'>
+    a { color:crimson; }
+    body { font-family:'Georgia'}
+    ul { list-style-position:inside; padding-left:5px;margin:5px; }
+    ul li { padding:2px; padding-left:5px; margin:5px; }
+    #footer { margin-top:10px; font-size:14px; color:#999; border-top:1px solid #999;padding-top:10px; }
+    #go { background:crimson; color:#fff; padding:5px 18px; }
+    a#go { text-decoration:none; }
+    a#go:hover { text-decoration:underline; }
+    input { padding:5px; font-size:14px; }
+  </style>
+</head>
+<body>
+  <h2>Tweet Reader</h2>
+  <p>Whats your twitter id: @<input type="text" id="uid" value="kalyan02">
+
+  <a href='#' id='go'>Read</a></p>
+
+
+<div id="footer">
+  <a href='http://kalyanchakravarthy.net'>by kalyan</a>
+</div>
+<script type="text/javascript">
+  $(document).ready(function(){
+      $("#go").click(function(){
+          uid = $("#uid").val();
+          if( uid.length > 0 ) {
+            window.location = '/tweets/read/' + uid;
+          }
+        });
+});
+</script>
+</body>
+</html>

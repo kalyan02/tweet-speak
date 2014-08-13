@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tweet reader for : user</title>
+  <style type='text/css'>
+   a { color:crimson; }
+    body { font-family:'Georgia'}
+    ul { list-style-position:inside; padding-left:5px;margin:5px; }
+    ul li { padding:2px; padding-left:5px; margin:5px; }
+    #footer { margin-top:10px; font-size:14px; color:#999; border-top:1px solid #999;padding-top:5px; }
+    a#go { background:crimson; color:#fff; padding:5px 18px; }
+    a#go { text-decoration:none; }
+    a#go:hover { text-decoration:underline; }
+    input { padding:5px; font-size:14px; }
+ </style>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="/tweets/static/mespeak.js"></script>
+  <script type="text/javascript">
+  meSpeak.loadConfig("/tweets/static/mespeak_config.json");
+  meSpeak.loadVoice("/tweets/static/voices/en/en.json");
+
+  function loadVoice(id) {
+    var fname="/static/voices/"+id+".json";
+    meSpeak.loadVoice(fname, voiceLoaded);
+  }
+
+  </script>
+</head>
+<body>
+  <h2>Tweet Reader</h2>
+  <p>Whats your twitter id: @<input type="text" id="uid" value="{{ user }}">
+  <a href='#' id='go'>Read</a></p>
+
+<div id="footer"></div>
+ 
+  <h2><a href='/tweets/'>Back</a> | <a href='https://twitter.com/{{user}}'>@{{user}}</a></h2>
+<ul id="items">
+  {% for item in items %}
+  <li>{{item}}</li>
+  {% endfor %}
+</ul>
+
+<div id="footer">
+  Note: data is cached for 5 hours<br />
+  <a href='http://kalyanchakravarthy.net'>by kalyan</a>
+</div>
+<script type="text/javascript">
+  $(document).ready(function(){
+      $("#go").click(function(){
+          uid = $("#uid").val();
+          if( uid.length > 0 ) { 
+            window.location = '/tweets/read/' + uid;
+          }   
+        }); 
+});
+
+$(document).ready(function(){
+    tweets_li = $("li");
+    tweets = [];
+
+    for( i=0; i<tweets_li.length; i++ ) {
+      tweets.push( tweets_li[i].innerHTML );
+    }
+    console.log(tweets);
+
+    function do_speak(index) {
+    $( 'ul li' ).css('background','#fff');
+      $( tweets_li[index] ).css('background','#eee');
+      meSpeak.speak(tweets[index], { 
+        amplitude: 200, 
+        wordgap: 1, 
+        pitch: 45, 
+        speed: 130, 
+        variant: "" 
+      }, function() {
+         if( index < tweets.length ) {
+           do_speak(index+1);
+         }
+      });
+    }
+
+   do_speak(0);
+});
+</script>
+</body>
+</html>
